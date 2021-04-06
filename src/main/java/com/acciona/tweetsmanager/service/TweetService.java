@@ -8,7 +8,7 @@ import com.acciona.tweetsmanager.model.User;
 
 public interface TweetService {
 
-	List<Tweet> findAllTweets();
+	List<Tweet> findAllTweets(Integer followers);
 	
 	Optional<Tweet> getTweet(Long tweetId);
 	

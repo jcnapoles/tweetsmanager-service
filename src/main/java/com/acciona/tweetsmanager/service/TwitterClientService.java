@@ -4,7 +4,7 @@ public interface TwitterClientService {
 	
 	public void authenticate();
 	
-	public void streamingApi();
+	public void streamingApi(Integer followers);
 	
 	public void closeStreamingApi();
 }

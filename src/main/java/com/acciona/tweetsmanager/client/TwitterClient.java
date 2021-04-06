@@ -14,8 +14,8 @@ public class TwitterClient {
 	@Autowired
 	TwitterClientService twitterClientService;
 	
-	public void streamingApi() {
-		twitterClientService.streamingApi();
+	public void streamingApi(Integer followers) {
+		twitterClientService.streamingApi(followers);
 	}
 
 }

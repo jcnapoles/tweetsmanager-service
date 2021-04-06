@@ -24,9 +24,9 @@ public class TweetServiceImpl implements TweetService{
 	TwitterClientService twitterClientService;
 	
 	@Override
-	public List<Tweet> findAllTweets() {
+	public List<Tweet> findAllTweets(Integer followers) {
 		twitterClientService.closeStreamingApi();
-		twitterClientService.streamingApi();
+		twitterClientService.streamingApi(followers);
 		return tweetRepository.findAll();
 	}
 

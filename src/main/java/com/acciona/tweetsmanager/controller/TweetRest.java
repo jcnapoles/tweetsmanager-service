@@ -46,12 +46,12 @@ public class TweetRest {
 
 	/*********************** Retrieve All Tweets or By User ***********************/
 	@GetMapping(value = "/tweets")
-	public ResponseEntity<List<Tweet>> getAllTweets(@RequestParam(name = "user", required = false) Long userId) {
+	public ResponseEntity<List<Tweet>> getAllTweets(@RequestParam(name = "user", required = false) Long userId, @RequestParam(name = "followers", required = false) Integer followers) {
 		log.debug("REST request to retrieve validated tweets by user: {}", userId);
 		List<Tweet> tweets = new ArrayList<Tweet>();
 		
 		if (null == userId) {
-			tweets = tweetService.findAllTweets();
+			tweets = tweetService.findAllTweets(followers);
 			if (tweets.isEmpty()) {
 				return ResponseEntity.noContent().build();
 			}

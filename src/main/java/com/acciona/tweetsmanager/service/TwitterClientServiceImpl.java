@@ -52,28 +52,48 @@ public class TwitterClientServiceImpl implements TwitterClientService{
 	}
 
 	@Override
-	public void streamingApi() {
-		StatusToTweet mapper = Mappers.getMapper(StatusToTweet.class);
+	public void streamingApi(Integer followers) {
+		StatusToTweet mapper = Mappers.getMapper(StatusToTweet.class);		
 		String languages = Arrays.toString(Language.values()).toLowerCase().replace("[", "").replace("]", "").replaceAll(" ", "");		
 		twitterStream = new TwitterStreamFactory().getInstance().addListener(new StatusListener() {
             @Override
             public void onStatus(Status status) {
-            	if(status.getUser().getFollowersCount() >= 1500) {
-            		Tweet tweet = mapper.statusToTweet(status, status.getLang(), status.getHashtagEntities());
-                	User user = userRepository.save(tweet.getUser());
-                	tweet.setUser(user);
-                	Place place = tweet.getPlace();
-                	if(place != null) {
-                		placeRepository.save(place);
+            	if (followers == null) {
+            		if(status.getUser().getFollowersCount() >= 1500) {
+                		Tweet tweet = mapper.statusToTweet(status, status.getLang(), status.getHashtagEntities());
+                    	User user = userRepository.save(tweet.getUser());
+                    	tweet.setUser(user);
+                    	Place place = tweet.getPlace();
+                    	if(place != null) {
+                    		placeRepository.save(place);
+                    	}
+                    	Set<Hashtag> hashtagList = new HashSet<Hashtag>();
+                    	hashtagList = tweet.getHashtags();
+                    	if(hashtagList.size() != 0) {
+                    		hashtagrepository.saveAll(hashtagList);
+                    	}                	
+                    	tweetRepository.save(tweet);
+                        System.out.println("@" + status.getUser().getScreenName() + " - " + status.getText());
                 	}
-                	Set<Hashtag> hashtagList = new HashSet<Hashtag>();
-                	hashtagList = tweet.getHashtags();
-                	if(hashtagList.size() != 0) {
-                		hashtagrepository.saveAll(hashtagList);
-                	}                	
-                	tweetRepository.save(tweet);
-                    System.out.println("@" + status.getUser().getScreenName() + " - " + status.getText());
-            	}
+				}else {
+					if(status.getUser().getFollowersCount() >= followers) {
+	            		Tweet tweet = mapper.statusToTweet(status, status.getLang(), status.getHashtagEntities());
+	                	User user = userRepository.save(tweet.getUser());
+	                	tweet.setUser(user);
+	                	Place place = tweet.getPlace();
+	                	if(place != null) {
+	                		placeRepository.save(place);
+	                	}
+	                	Set<Hashtag> hashtagList = new HashSet<Hashtag>();
+	                	hashtagList = tweet.getHashtags();
+	                	if(hashtagList.size() != 0) {
+	                		hashtagrepository.saveAll(hashtagList);
+	                	}                	
+	                	tweetRepository.save(tweet);
+	                    System.out.println("@" + status.getUser().getScreenName() + " - " + status.getText());
+	            	}
+				}
+            	
             	
             }
 
