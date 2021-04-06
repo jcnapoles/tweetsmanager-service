@@ -21,15 +21,24 @@ class TweetRepositoryMockTest {
 	@Autowired
 	private TweetRepository tweetRepository;
 	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private PlaceRepository placeRepository;
+	
+	@Autowired
+	private HashtagRepository hashtagRepository;
+	
 	@Test
 	public void whenFindAll_thenReturnListTweet() {
 		Set<Hashtag> hashtags = new HashSet<Hashtag>();
-		hashtags.add(Hashtag.builder().text("development").build());
+		hashtags.add(hashtagRepository.save(Hashtag.builder().text("development").build()));
 		Tweet tweet01 = Tweet.builder()
 				.language(Language.ES)
 				.text("Testing the text")
-				.user(User.builder().id(2L).build())
-				.place(Place.builder().id(3L).build())
+				.user(userRepository.save(User.builder().id(2L).build()))
+				.place(placeRepository.save(Place.builder().id(3L).build()))
 				.hashtags(hashtags)
 				.build();
 		tweetRepository.save(tweet01);
