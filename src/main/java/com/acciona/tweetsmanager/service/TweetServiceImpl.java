@@ -3,6 +3,7 @@ package com.acciona.tweetsmanager.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.acciona.tweetsmanager.model.Tweet;
@@ -17,10 +18,15 @@ import lombok.RequiredArgsConstructor;
 public class TweetServiceImpl implements TweetService{
 	
 	
-	private final TweetRepository tweetRepository;
-
+	private final TweetRepository tweetRepository;	
+	
+	@Autowired
+	TwitterClientService twitterClientService;
+	
 	@Override
-	public List<Tweet> findAllTweets() {		
+	public List<Tweet> findAllTweets() {
+		twitterClientService.closeStreamingApi();
+		twitterClientService.streamingApi();
 		return tweetRepository.findAll();
 	}
 
@@ -38,6 +44,21 @@ public class TweetServiceImpl implements TweetService{
 	public List<Tweet> getTweetValidatedByUser(User user) {		
 		return tweetRepository.findByUserAndValidation(user, true);
 	}
+
+	@Override
+	public Tweet createTweet(Tweet tweet) {
+		Optional<Tweet> tweetOptional = tweetRepository.findById(tweet.getId());
+        if (!tweetOptional.isEmpty()){
+            return  tweetOptional.get();
+        }
+        tweet.setValidation(false);
+        Tweet tweetBD = tweetRepository.save(tweet);
+
+        return tweetBD;
+		
+	}
+	
+	
 	
 
 }

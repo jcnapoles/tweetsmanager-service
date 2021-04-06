@@ -16,5 +16,5 @@ public interface TweetService {
 	
 	List<Tweet> getTweetValidatedByUser(User user);
 	
-	
+	Tweet createTweet(Tweet tweet);
 }

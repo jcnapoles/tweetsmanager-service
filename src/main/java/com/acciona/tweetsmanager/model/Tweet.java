@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
@@ -37,6 +38,8 @@ public class Tweet implements Serializable{
 	@Column(name = "id_str")
 	private String idStr;
 	
+	@Lob
+	@Column
 	private String text;
 	
 	private Boolean validation;

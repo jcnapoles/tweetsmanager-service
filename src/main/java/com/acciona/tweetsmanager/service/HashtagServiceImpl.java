@@ -1,6 +1,7 @@
 package com.acciona.tweetsmanager.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +24,17 @@ public class HashtagServiceImpl implements HashtagService{
 	public List<Hashtag> findByCountUsedOrderDesc(Integer pageSize) {			
 		Pageable pageable = PageRequest.of(0, pageSize);		
 		return hashtagRepository.findByCountUsedOrderDesc(pageable);
+	}
+
+	@Override
+	public Hashtag createHashtag(Hashtag hashtag) {
+		Optional<Hashtag> hashtagOptional = hashtagRepository.findById(hashtag.getId());
+        if (!hashtagOptional.isEmpty()){
+            return  hashtagOptional.get();
+        }        
+        Hashtag hashtagBD = hashtagRepository.save(hashtag);
+
+        return hashtagBD;
 	}
 	
 	

@@ -1,4 +1,4 @@
-package com.acciona.tweetsmanager;
+package com.acciona.tweetsmanager.repository;
 
 import java.util.HashSet;
 import java.util.List;
@@ -14,7 +14,6 @@ import com.acciona.tweetsmanager.model.Language;
 import com.acciona.tweetsmanager.model.Place;
 import com.acciona.tweetsmanager.model.Tweet;
 import com.acciona.tweetsmanager.model.User;
-import com.acciona.tweetsmanager.repository.TweetRepository;
 
 @DataJpaTest
 class TweetRepositoryMockTest {

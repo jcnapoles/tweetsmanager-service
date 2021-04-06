@@ -1,4 +1,4 @@
-package com.acciona.tweetsmanager;
+package com.acciona.tweetsmanager.service;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -18,8 +18,6 @@ import com.acciona.tweetsmanager.model.Place;
 import com.acciona.tweetsmanager.model.Tweet;
 import com.acciona.tweetsmanager.model.User;
 import com.acciona.tweetsmanager.repository.TweetRepository;
-import com.acciona.tweetsmanager.service.TweetService;
-import com.acciona.tweetsmanager.service.TweetServiceImpl;
 
 @SpringBootTest
 class TweetServiceMockTest {
