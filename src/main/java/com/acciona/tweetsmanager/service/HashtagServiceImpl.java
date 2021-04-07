@@ -15,28 +15,26 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class HashtagServiceImpl implements HashtagService{
-	
+public class HashtagServiceImpl implements HashtagService {
+
 	@Autowired
 	HashtagRepository hashtagRepository;
 
 	@Override
-	public List<Hashtag> findByCountUsedOrderDesc(Integer pageSize) {			
-		Pageable pageable = PageRequest.of(0, pageSize);		
+	public List<Hashtag> findByCountUsedOrderDesc(Integer pageSize) {
+		Pageable pageable = PageRequest.of(0, pageSize);
 		return hashtagRepository.findByCountUsedOrderDesc(pageable);
 	}
 
 	@Override
 	public Hashtag createHashtag(Hashtag hashtag) {
 		Optional<Hashtag> hashtagOptional = hashtagRepository.findById(hashtag.getId());
-        if (!hashtagOptional.isEmpty()){
-            return  hashtagOptional.get();
-        }        
-        Hashtag hashtagBD = hashtagRepository.save(hashtag);
+		if (!hashtagOptional.isEmpty()) {
+			return hashtagOptional.get();
+		}
+		Hashtag hashtagBD = hashtagRepository.save(hashtag);
 
-        return hashtagBD;
+		return hashtagBD;
 	}
-	
-	
 
 }

@@ -15,23 +15,25 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@AllArgsConstructor @NoArgsConstructor @Builder
-public class Place implements Serializable{
-	
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class Place implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;	
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	private String name;
-	
+
 	@Column(name = "place_type")
 	private String placeType;
-	
+
 	@Column(name = "country_code")
 	private String countryCode;
-	
+
 	private String country;
 
 }

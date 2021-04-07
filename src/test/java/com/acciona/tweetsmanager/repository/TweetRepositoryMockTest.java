@@ -17,34 +17,30 @@ import com.acciona.tweetsmanager.model.User;
 
 @DataJpaTest
 class TweetRepositoryMockTest {
-	
+
 	@Autowired
 	private TweetRepository tweetRepository;
-	
+
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private PlaceRepository placeRepository;
-	
+
 	@Autowired
 	private HashtagRepository hashtagRepository;
-	
+
 	@Test
 	public void whenFindAll_thenReturnListTweet() {
 		Set<Hashtag> hashtags = new HashSet<Hashtag>();
 		hashtags.add(hashtagRepository.save(Hashtag.builder().text("development").build()));
-		Tweet tweet01 = Tweet.builder()
-				.language(Language.ES)
-				.text("Testing the text")
+		Tweet tweet01 = Tweet.builder().language(Language.ES).text("Testing the text")
 				.user(userRepository.save(User.builder().id(2L).build()))
-				.place(placeRepository.save(Place.builder().id(3L).build()))
-				.hashtags(hashtags)
-				.build();
+				.place(placeRepository.save(Place.builder().id(3L).build())).hashtags(hashtags).build();
 		tweetRepository.save(tweet01);
-		
+
 		List<Tweet> founds = tweetRepository.findAll();
-		
+
 		Assertions.assertThat(founds.size() > 0);
 	}
 

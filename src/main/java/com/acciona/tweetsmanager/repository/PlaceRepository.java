@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.acciona.tweetsmanager.model.Place;
 
 @Repository
-public interface PlaceRepository extends JpaRepository<Place, Long>{
+public interface PlaceRepository extends JpaRepository<Place, Long> {
 
 }

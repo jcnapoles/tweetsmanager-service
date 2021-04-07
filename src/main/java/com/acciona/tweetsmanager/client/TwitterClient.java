@@ -1,19 +1,18 @@
 package com.acciona.tweetsmanager.client;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import com.acciona.tweetsmanager.service.TwitterClientService;
 
-import lombok.NoArgsConstructor;
-
-
-@NoArgsConstructor
+@Component
+@Configuration
 public class TwitterClient {
-	
-	
+
 	@Autowired
-	TwitterClientService twitterClientService;
-	
+	private TwitterClientService twitterClientService;
+
 	public void streamingApi(Integer followers) {
 		twitterClientService.streamingApi(followers);
 	}

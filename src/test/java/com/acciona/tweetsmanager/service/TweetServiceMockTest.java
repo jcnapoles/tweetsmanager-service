@@ -24,10 +24,9 @@ class TweetServiceMockTest {
 
 	@Mock
 	private TweetRepository tweetRepository;
-	
+
 	private TweetService tweetService;
-	
-	
+
 	@SuppressWarnings("deprecation")
 	@BeforeEach
 	public void setup() {
@@ -35,21 +34,16 @@ class TweetServiceMockTest {
 		tweetService = new TweetServiceImpl(tweetRepository);
 		Set<Hashtag> hashtags = new HashSet<Hashtag>();
 		hashtags.add(Hashtag.builder().text("development").build());
-		Tweet tweet01 = Tweet.builder()
-				.language(Language.ES)
-				.text("Testing the text")
-				.user(User.builder().id(2L).build())
-				.place(Place.builder().id(3L).build())
-				.hashtags(hashtags)
-				.build();
-		
+		Tweet tweet01 = Tweet.builder().language(Language.ES).text("Testing the text")
+				.user(User.builder().id(2L).build()).place(Place.builder().id(3L).build()).hashtags(hashtags).build();
+
 		Mockito.when(tweetRepository.findById(1L)).thenReturn(Optional.of(tweet01));
-		 Mockito.when(tweetRepository.save(tweet01)).thenReturn(tweet01);
+		Mockito.when(tweetRepository.save(tweet01)).thenReturn(tweet01);
 	}
-	
+
 	@Test
 	public void whenValidGetID_ThenReturnTweet() {
 		Tweet found = tweetService.getTweet(1L).get();
-	       Assertions.assertThat(found.getText()).isEqualTo("Testing the text");
+		Assertions.assertThat(found.getText()).isEqualTo("Testing the text");
 	}
 }

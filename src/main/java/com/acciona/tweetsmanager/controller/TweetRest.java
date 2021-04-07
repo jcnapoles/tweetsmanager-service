@@ -46,12 +46,12 @@ public class TweetRest {
 
 	/*********************** Retrieve All Tweets or By User ***********************/
 	@GetMapping(value = "/tweets")
-	public ResponseEntity<List<Tweet>> getAllTweets(@RequestParam(name = "user", required = false) Long userId, @RequestParam(name = "followers", required = false) Integer followers) {
+	public ResponseEntity<List<Tweet>> getAllTweets(@RequestParam(name = "user", required = false) Long userId) {
 		log.debug("REST request to retrieve validated tweets by user: {}", userId);
 		List<Tweet> tweets = new ArrayList<Tweet>();
-		
+
 		if (null == userId) {
-			tweets = tweetService.findAllTweets(followers);
+			tweets = tweetService.findAllTweets();
 			if (tweets.isEmpty()) {
 				return ResponseEntity.noContent().build();
 			}
@@ -66,7 +66,7 @@ public class TweetRest {
 					return ResponseEntity.noContent().build();
 				}
 			}
-			
+
 		}
 
 		return ResponseEntity.ok(tweets);
@@ -110,38 +110,37 @@ public class TweetRest {
 
 		return ResponseEntity.ok(result.get());
 	}
-	
-	/* -------------------Create a Tweet-------------------------------------------*/
-    @PostMapping()
-    public ResponseEntity<Tweet> createTweet(@Valid @RequestBody Tweet tweet, BindingResult result) {
-        log.info("Creating Tweet : {}", tweet);
-        if (result.hasErrors()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, this.formatMessage(result));
-        }
-        Tweet tweetBD = tweetService.createTweet(tweet);
 
-        return  ResponseEntity.status( HttpStatus.CREATED).body(tweetBD);
-    }
-	
-	  private String formatMessage( BindingResult result){
-	        List<Map<String,String>> errors = result.getFieldErrors().stream()
-	                .map(err ->{
-	                    Map<String,String> error =  new HashMap<>();
-	                    error.put(err.getField(), err.getDefaultMessage());
-	                    return error;
+	/*
+	 * -------------------Create a Tweet-------------------------------------------
+	 */
+	@PostMapping(value = "/tweets")
+	public ResponseEntity<Tweet> createTweet(@Valid @RequestBody Tweet tweet, BindingResult result) {
+		log.info("Creating Tweet : {}", tweet);
+		if (result.hasErrors()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, this.formatMessage(result));
+		}
+		Tweet tweetBD = tweetService.createTweet(tweet);
 
-	                }).collect(Collectors.toList());
-	        ErrorMessage errorMessage = ErrorMessage.builder()
-	                .code("01")
-	                .messages(errors).build();
-	        ObjectMapper mapper = new ObjectMapper();
-	        String jsonString="";
-	        try {
-	            jsonString = mapper.writeValueAsString(errorMessage);
-	        } catch (JsonProcessingException e) {
-	            e.printStackTrace();
-	        }
-	        return jsonString;
-	    }
+		return ResponseEntity.status(HttpStatus.CREATED).body(tweetBD);
+	}
+
+	private String formatMessage(BindingResult result) {
+		List<Map<String, String>> errors = result.getFieldErrors().stream().map(err -> {
+			Map<String, String> error = new HashMap<>();
+			error.put(err.getField(), err.getDefaultMessage());
+			return error;
+
+		}).collect(Collectors.toList());
+		ErrorMessage errorMessage = ErrorMessage.builder().code("01").messages(errors).build();
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString = "";
+		try {
+			jsonString = mapper.writeValueAsString(errorMessage);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return jsonString;
+	}
 
 }

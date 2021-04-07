@@ -8,13 +8,13 @@ import com.acciona.tweetsmanager.model.User;
 
 public interface TweetService {
 
-	List<Tweet> findAllTweets(Integer followers);
-	
+	List<Tweet> findAllTweets();
+
 	Optional<Tweet> getTweet(Long tweetId);
-	
+
 	Tweet updateTweet(Tweet tweet);
-	
+
 	List<Tweet> getTweetValidatedByUser(User user);
-	
+
 	Tweet createTweet(Tweet tweet);
 }

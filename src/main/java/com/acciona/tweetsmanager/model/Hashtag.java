@@ -14,13 +14,15 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@AllArgsConstructor @NoArgsConstructor @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Hashtag {
-	
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotNull
 	private String text;
 

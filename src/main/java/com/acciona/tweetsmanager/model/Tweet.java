@@ -26,38 +26,37 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@AllArgsConstructor @NoArgsConstructor @Builder
-public class Tweet implements Serializable{
-	
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class Tweet implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(name = "id_str")
 	private String idStr;
-	
+
 	@Lob
 	@Column
 	private String text;
-	
+
 	private Boolean validation;
-	
+
 	@Enumerated(value = EnumType.STRING)
 	private Language language;
-	
-	@OneToOne(fetch = FetchType.EAGER)     
-    private User user;
-    
-	@OneToOne(fetch = FetchType.EAGER)     
-    private Place place;    
-   
-    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-    @ManyToMany(fetch = FetchType.LAZY) 
-    @JoinTable(name = "tweet_hashtag",joinColumns=
-            @JoinColumn(name="tweet_id", referencedColumnName="ID"),
-        inverseJoinColumns=
-            @JoinColumn(name="hashtag_id", referencedColumnName="ID"))
-    private Set<Hashtag> hashtags;
+
+	@OneToOne(fetch = FetchType.EAGER)
+	private User user;
+
+	@OneToOne(fetch = FetchType.EAGER)
+	private Place place;
+
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "tweet_hashtag", joinColumns = @JoinColumn(name = "tweet_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "hashtag_id", referencedColumnName = "ID"))
+	private Set<Hashtag> hashtags;
 }

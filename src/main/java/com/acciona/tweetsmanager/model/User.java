@@ -15,23 +15,25 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@AllArgsConstructor @NoArgsConstructor @Builder
-public class User implements Serializable{	
-	
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class User implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(name = "id_str")
 	private String idStr;
-	
+
 	private String name;
-	
+
 	@Column(name = "screen_name")
 	private String screenName;
-	
+
 	@Column(name = "followers_count")
 	private Integer followersCount;
 
