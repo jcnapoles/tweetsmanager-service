@@ -58,7 +58,7 @@ public class TweetRest {
 
 		} else {
 			Optional<User> user = userRepository.findById(userId);
-			if (user.isEmpty()) {
+			if (!user.isPresent()) {
 				return ResponseEntity.noContent().build();
 			} else {
 				tweets = tweetService.getTweetValidatedByUser(user.get());
@@ -77,7 +77,7 @@ public class TweetRest {
 	public ResponseEntity<Tweet> getTweet(@PathVariable("id") Long id) {
 		log.debug("REST request to get a Tweet by: {} ", id);
 		Optional<Tweet> tweet = tweetService.getTweet(id);
-		if (tweet.isEmpty()) {
+		if (!tweet.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(tweet.get());

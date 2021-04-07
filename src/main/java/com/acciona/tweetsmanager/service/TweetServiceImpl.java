@@ -40,7 +40,7 @@ public class TweetServiceImpl implements TweetService {
 	@Override
 	public Tweet createTweet(Tweet tweet) {
 		Optional<Tweet> tweetOptional = tweetRepository.findById(tweet.getId());
-		if (!tweetOptional.isEmpty()) {
+		if (tweetOptional.isPresent()) {
 			return tweetOptional.get();
 		}
 		tweet.setValidation(false);

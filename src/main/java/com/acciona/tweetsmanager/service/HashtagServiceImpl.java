@@ -29,7 +29,7 @@ public class HashtagServiceImpl implements HashtagService {
 	@Override
 	public Hashtag createHashtag(Hashtag hashtag) {
 		Optional<Hashtag> hashtagOptional = hashtagRepository.findById(hashtag.getId());
-		if (!hashtagOptional.isEmpty()) {
+		if (hashtagOptional.isPresent()) {
 			return hashtagOptional.get();
 		}
 		Hashtag hashtagBD = hashtagRepository.save(hashtag);
